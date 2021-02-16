@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -21,6 +23,10 @@ public class Produto {
 	
 	@Column(name="dt_inclusao")	
 	private LocalDateTime dtInclusao;
+	
+	@OneToOne
+    @JoinColumn(name = "id_unidade_medida")
+	private UnidadeMedida unidadeMedida;
 	
 
 }
