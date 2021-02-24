@@ -1,6 +1,7 @@
 package br.com.agilizese.agilizese.restservice;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.sun.istack.Nullable;
 
 import br.com.agilizese.agilizese.domain.ProdutoPedido;
 import br.com.agilizese.agilizese.service.PedidoService;
@@ -27,8 +30,11 @@ public class PedidoRest {
 	@Autowired
 	private PedidoService pedidoServive;
 
-	@GetMapping(value = "/{nome}")
-	public List<ProdutoPedido> getPedido(@PathVariable("nome") String nome) {
+	@GetMapping(value = {"/", "/{id}"})
+	public List<ProdutoPedido> getPedido(@PathVariable(required = false, name = "id") Long id) {
+		if (id != null) {
+			return pedidoServive.findById(id);
+		}
 		return pedidoServive.findAll();
 	}
 
